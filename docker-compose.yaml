@@ -1,0 +1,36 @@
+version: '3'
+services:
+  redis-1:
+    container_name: redis-1
+    image: redis
+    volumes:
+      - ${PWD}/redis-1:/etc/redis/ 
+    command: redis-server /etc/redis/redis.conf
+    networks:
+      - net
+    expose:
+      - 6379
+  redis-2:
+    container_name: redis-2
+    image: redis
+    volumes:
+      - ${PWD}/redis-2:/etc/redis/ 
+    command: redis-server /etc/redis/redis.conf
+    networks:
+      - net
+    expose:
+      - 6379
+  redis-3:
+    container_name: redis-3
+    image: redis
+    volumes:
+      - ${PWD}/redis-3:/etc/redis/ 
+    command: redis-server /etc/redis/redis.conf
+    networks:
+      - net
+    expose:
+      - 6379
+
+
+networks:
+  net:
