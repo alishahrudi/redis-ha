@@ -1,5 +1,15 @@
 version: '3'
 services:
+  client:
+    image: redis-simple-client
+    networks:
+      - net
+    environment:
+      REDIS_HOST: redis-1
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: "a-very-complex-password-here"
+    ports:
+      - 80:80
   redis-1:
     container_name: redis-1
     image: redis
@@ -30,7 +40,5 @@ services:
       - net
     expose:
       - 6379
-
-
 networks:
   net:
