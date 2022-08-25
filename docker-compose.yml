@@ -1,5 +1,6 @@
 version: '3'
 services:
+  # client instances
   client:
     image: redis-simple-client
     networks:
@@ -10,6 +11,8 @@ services:
       REDIS_PASSWORD: "a-very-complex-password-here"
     ports:
       - 80:80
+
+  # redis instances
   redis-1:
     container_name: redis-1
     image: redis
@@ -20,6 +23,7 @@ services:
       - net
     expose:
       - 6379
+
   redis-2:
     container_name: redis-2
     image: redis
@@ -30,6 +34,7 @@ services:
       - net
     expose:
       - 6379
+
   redis-3:
     container_name: redis-3
     image: redis
@@ -40,5 +45,47 @@ services:
       - net
     expose:
       - 6379
+    
+  # sentinels instances 
+  sentinel-1: 
+    container_name: sentinel-1
+    image: redis
+    volumes:
+      - ${PWD}/sentinel-1:/etc/redis/ 
+    command: redis-server /etc/redis/redis.conf --sentinel
+    networks:
+      - net
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+  
+  sentinel-2: 
+    container_name: sentinel-2
+    image: redis
+    volumes:
+      - ${PWD}/sentinel-2:/etc/redis/ 
+    command: redis-server /etc/redis/redis.conf --sentinel
+    networks:
+      - net
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+
+  sentinel-3: 
+    container_name: sentinel-3
+    image: redis
+    volumes:
+      - ${PWD}/sentinel-3:/etc/redis/ 
+    command: redis-server /etc/redis/redis.conf --sentinel
+    networks:
+      - net
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+
+  
 networks:
   net:
