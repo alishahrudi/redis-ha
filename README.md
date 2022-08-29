@@ -84,6 +84,7 @@ Documentation [here](https://redis.io/topics/sentinel)
 ```
 #********BASIC CONFIG************************************
 port 5000
+sentinel resolve-hostnames yes
 sentinel monitor mymaster redis-1 6379 2
 sentinel down-after-milliseconds mymaster 5000
 sentinel failover-timeout mymaster 60000
