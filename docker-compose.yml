@@ -52,40 +52,43 @@ services:
     image: redis
     volumes:
       - ${PWD}/sentinel-1:/etc/redis/ 
-    command: redis-server /etc/redis/redis.conf --sentinel
+    command: redis-sentinel /etc/redis/redis.conf 
     networks:
       - net
     depends_on:
       - redis-1
       - redis-2
       - redis-3
-  
+    expose:
+      - 5000
   sentinel-2: 
     container_name: sentinel-2
     image: redis
     volumes:
       - ${PWD}/sentinel-2:/etc/redis/ 
-    command: redis-server /etc/redis/redis.conf --sentinel
+    command: redis-sentinel /etc/redis/redis.conf 
     networks:
       - net
     depends_on:
       - redis-1
       - redis-2
       - redis-3
-
+    expose:
+      - 5000
   sentinel-3: 
     container_name: sentinel-3
     image: redis
     volumes:
       - ${PWD}/sentinel-3:/etc/redis/ 
-    command: redis-server /etc/redis/redis.conf --sentinel
+    command: redis-sentinel /etc/redis/redis.conf 
     networks:
       - net
     depends_on:
       - redis-1
       - redis-2
       - redis-3
-
+    expose:
+      - 5000
   
 networks:
   net:
